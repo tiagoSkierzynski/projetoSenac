@@ -1,0 +1,64 @@
+/*menu*/
+#menu {
+    background-color: #0ab959;
+    height: 10%;
+    width: 100%;
+  }
+  .menu1 {
+    width: 100%;
+  }
+  
+  /*artigo*/
+  #article {
+    background-color: coral;
+    width: auto;
+    height: auto;
+  }
+  
+  /*seção 1 linha*/
+  #section1 {
+    background-color: rgb(34, 236, 34);
+    height: 363px;
+    width: 100%;
+  }
+
+  #primeiro {
+    background-color: rgb(167, 151, 146);
+    width: auto;
+    height: auto;
+  }
+
+  /*rodapé*/
+  #rodape {
+    background-color: rgb(255, 230, 0);
+    height: 120px;
+    width: 100%;
+  }
+  
+  /*imagens*/
+  #imagemArtigo {
+    height: auto;
+    width: 100%;
+  }
+  
+  #imagem1 {
+    height: 500px;
+    width: 100%;
+  }
+  
+  #imagem2 {
+    height: 500px;
+    width: 100%;
+  }
+  
+  #imagem3 {
+    height: 500px;
+    width: 100%;
+  }
+  
+  
+  #coluna1 {
+    height: 363px;
+    width: 100%;
+    background-color: #0062cc;
+  }
