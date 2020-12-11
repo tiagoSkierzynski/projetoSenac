@@ -3,6 +3,20 @@ const usuario = require("./models/usuario")
 const express = require("express")
 const app = express()
 
+app.get('/delete/:id',function(req,res){
+    usuario.destroy({
+        where:{'id': req.params.id}
+    }).then(function(){
+        usuario.findAll().then(function(doadores){
+            res.render('formulario',{doador: doadores.map(
+                pagamento => pagamento.toJSON())})
+        })
+
+        .catch(function(){ res.send("não deu certo")
+        })
+    })
+});
+
 app.listen(3000);
 
 app.get('/formulario',function(req,res){
@@ -28,6 +42,9 @@ app.post('/cadUsuario',function(req,res){
         nome:req.body.nome,
         senha:req.body.senha
     }).then(function(){
+        usuario.findAll().then(function(doadores){
+            res.render('formulario',{doador: doadores.map(pagamento => pagamento.toJSON())})
+        })
         res.render("formulario")
     }).catch(function(erro){
         res.send("Erro "+erro)
