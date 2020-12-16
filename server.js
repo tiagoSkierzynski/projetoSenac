@@ -17,6 +17,26 @@ app.get('/delete/:id',function(req,res){
     })
 });
 
+//VAMOS CRIAR MAIS UMA ROTA E ELA DARA PARA UM FORMULÁRIO
+app.get('/update/:id',function(req,res){
+    usuario.findAll({ where:{id : req.params.id}}).then(function(doadores){
+        res.render('atualiza',{doador: doadores.map(pagamento => pagamento.toJSON())})
+    })
+})
+
+//DEPOIS VAMOS CRIAR ESSA ROTA QUE ENVIA PARA O BANCO E DEPOIS CHAMA O FORMULARIO
+app.post('/updateUsuario',function(req,res){
+    usuario.update({Nome:req.body.nome,senha:req.body.senha },{
+        where:{id:req.body.codigo}}
+    ).then(function(){
+        usuario.findAll().then(function(doadores){
+            res.render('formulario',{doador: doadores.map(pagamento => pagamento.toJSON())})
+        })
+    }).catch(function(erro){
+        res.send("erro "+erro)
+    })
+})
+
 app.listen(3000);
 
 app.get('/formulario',function(req,res){
