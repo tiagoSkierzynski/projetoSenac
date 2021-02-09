@@ -1,13 +1,15 @@
 <h1>Cadastar usuários</h1>
-<form action="/cadUsuario" method="POST">
+<form action="/cadUsuario" method="POST" enctype="multipart/form-data">
     <input type="text" name="nome" placeholder="informe o nome"/><br><br>
     <input type="password" name="senha" placeholder="informe a senha"/>
     <br><br>
     <input type="submit" name="conectar">
+    <input type="file" name="image_prod">
 </form>
 
 <table class="table" >
   <tr>
+    <th>Foto</th>
     <th>Nome</th>
     <th>Senha</th>
     <th>Atualizar</th>
@@ -15,6 +17,7 @@
   </tr>
   {{#each doador}}
   <tr>
+      <td><img src="/static/{{foto}}"></td>
       <td>{{nome}}</td>
       <td>{{senha}}</td>
       <td><a href="/update/{{id}}">Modificar</a></td>

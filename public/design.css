@@ -30,7 +30,7 @@
 
   /*rodapé*/
   #rodape {
-    background-color: rgb(255, 230, 0);
+    background-color: #F9C1D8;
     height: 120px;
     width: 100%;
   }
@@ -68,5 +68,30 @@
   }
 
   #cor {
-    background-color: yellow;
+    background-color: #F9C1D8;
   }
+
+  #pessoa{
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
+    }
+
+  #botaoPessoa{
+    height: 100px;
+    width: 300px;
+  }
+
+  .fundoPagina{
+    background-color:  #F9C1D8;
+  }
+
+ .botao{
+    margin-top:25%;
+    margin-block-end:25%;
+ }
+
+.xis{
+  height: 100px;
+  width: 300px;
+}
+
