@@ -27,14 +27,19 @@ app.use(session({
  /*Esta rota esta fazendo o login do site, ele vai até o banco de dados, conta quantos registros tem no BD, e se 
     for superior a um ele entra na sentença. Ele ve que há um dado igual aquele no banco.*/
 
+    app.get('/login', function (req, res) {
+        res.render("login");
+    })
+    
     app.post('/login1', function(req,res){
-        req.session.nome = req.body.nome;
-        req.session.senha = req.body.senha;
-        usuario.count({where: [{nome: req.session.nome}, {senha: req.session.senha}]}).then(function(dados){
+        req.session.nome = req.body.nome
+        req.session.senha = req.body.senha
+        
+        usuario.count({where: ({nome: req.session.nome}, {senha: req.session.senha})}).then(function(dados){
             if(dados >= 1){
                 res.render('caminhos')
             }else{
-                res.render('login')
+                res.send("Usuário não encontrado" + dados)
             }
         })
     })
@@ -128,6 +133,7 @@ app.get("/login", function(req,res){
     res.render("login")
 }),
 
+/*         login antigo, comparando a estrutura com duas variaveis chumbadas
 app.post('/login',function(req,res){
     req.session.nome = 'tiago';
     req.session.senha = 'tiago123';
@@ -137,7 +143,7 @@ app.post('/login',function(req,res){
     }else{
         res.send("usuario não existe")
     }
-})
+})*/
 
 app.get("/cadastro", function(req,res){
     res.render("cadastro")
