@@ -10,9 +10,6 @@ const usuario = db.sequelize.define('usuarios',{
     telefone:{
         type:db.Sequelize.STRING
     },
-    tipo:{
-        type:db.Sequelize.STRING
-    },
     email:{
         type:db.Sequelize.STRING
     },
@@ -33,7 +30,7 @@ const usuario = db.sequelize.define('usuarios',{
     },
     foto:{
         type:db.Sequelize.STRING
-    }
+    },
 
 
 })

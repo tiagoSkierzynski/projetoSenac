@@ -43,7 +43,37 @@ app.use(session({
             }
         })
     })
-    
+
+ /*   
+    //código responsável pela validação do email, com o servidor smtp ele vai ser responsável pela validação da conta dos usuários pelo email
+    const nodemailer = require("nodemailer")
+
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+            user: "tiagosala44@gmail.com",
+            pass: "salatiago44"
+        },
+        tls: { rejectUnauthorized: false }
+    });
+
+    const mailOptions = {
+        from: 'tiagosala44@gmail.com',
+        to: 'tiagoskierzynski@gmail.com',
+        subject: 'E-mail enviado usando Node!',
+        text: 'Bem fácil, não? ;)'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email enviado: ' + info.response);
+        }
+    });
+    */
     //este código configura o multer para fazer upload de imagens
     const multer = require("multer")
 
@@ -61,9 +91,9 @@ app.use(session({
         //Aqui destrói a sessão criada após fazer login.
     })
 
-app.get('/delete/:id',function(req,res){
+app.post('/delete',function(req,res){
     usuario.destroy({
-        where:{'id': req.params.id}
+        where:{'id': req.body.id}
     }).then(function(){
         usuario.findAll().then(function(doadores){
             res.render('cadastro',{doador: doadores.map(
@@ -103,7 +133,8 @@ app.post('/cadUsuario',upload.single('foto'),function(req,res){
         estado:req.body.estado,
         cidade:req.body.cidade,
         cep:req.body.cep,
-        foto:req.file.originalname
+        foto:req.file.originalname,
+        descricao:req.body.descricao
     }).then(function(){
         usuario.findAll().then(function(doadores){
             res.render('cadastro',{doador: doadores.map(pagamento => pagamento.toJSON())})
@@ -117,8 +148,8 @@ app.get('/paginaInicial',function(req,res){
     res.render("paginaInicial")
 })
 
-app.get("/identificador", function(req,res){
-    res.render("identificador")
+app.get("/cadastrarAdministrador", function(req,res){
+    res.render("cadastrarAdministrador")
 })
 
 app.get("/quemSomos", function(req,res){
@@ -131,6 +162,10 @@ app.get("/doeAgora", function(req,res){
 
 app.get("/login", function(req,res){
     res.render("login")
+}),
+
+app.get("/caminhoAtualiza", function(req,res){
+    res.render("caminhoAtualiza")
 }),
 
 /*         login antigo, comparando a estrutura com duas variaveis chumbadas
@@ -153,24 +188,12 @@ app.get("/pessoa", function(req,res){
     res.render("pessoa")
 })
 
-app.get("/areaCadastro", function(req,res){
-    res.render("areaCadastro")
-})
-
-app.get("/areaDoacoes", function(req,res){
-    res.render("areaDoacoes")
+app.get("/cadastrarProdutos", function(req,res){
+    res.render("cadastrarProdutos")
 })
 
 app.get("/finalizarDoacao", function(req,res){
     res.render("finalizarDoacao")
-})
-
-app.get("/pessoaFisica", function(req,res){
-    res.render("pessoaFisica")
-})
-
-app.get("/pessoaJuridica", function(req,res){
-    res.render("pessoaJuridica")
 })
 
 //DEPOIS VAMOS CRIAR ESSA ROTA QUE ENVIA PARA O BANCO E DEPOIS CHAMA O FORMULARIO
