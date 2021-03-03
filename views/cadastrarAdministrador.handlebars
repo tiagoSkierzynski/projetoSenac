@@ -1,0 +1,111 @@
+<title>Cadastro ONG</title>
+<div class="container" >
+<br><br>
+  <br>
+<h2>Cadastro ONG</h2>
+	<form action="/cadOng" method="POST" enctype="multipart/form-data">
+    	<div class="form-row">
+			<div class="form-group col-md-6">
+				<input type="text"  class="form-control" placeholder="Razão Social" name="razaoSocial">
+			</div>
+			<div class="form-group col-md-6">
+				<input type="number" class="form-control" placeholder="Cnpj" name="cnpj">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group col-md-8">
+          		<input type="text" class="form-control" placeholder="Endereço" name="endereco">
+        	</div>
+			<div class="form-group col-md-4">
+				<input type="number"  class="form-control" placeholder="Número" name="numero">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group col-md-4">
+          		<input type="text" class="form-control" placeholder="Bairro" name="bairro">
+        	</div>
+			<div class="form-group col-md-4">
+				<input type="text"  class="form-control" placeholder="Cidade" name="cidade">
+			</div>
+			<div class="form-group col-md-4">
+				<input type="text"  class="form-control" placeholder="Estado" name="estado">
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group col-md-6">
+          		<input type="email" class="form-control"  id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail -- name@example.com" name="email">
+        	</div>
+        	<div class="form-group col-md-6">
+          		<input type="password" class="form-control" placeholder="Senha" name="senha">
+         	</div>
+		</div>
+      
+      	<div class="form-row">
+			<div class="form-group col-md-6">
+				<input type="number"  class="form-control" placeholder="Telefone Fixo" name="telefoneFixo">
+			</div>
+        	<div class="form-group col-md-6">
+				<input type="number"  class="form-control" placeholder="Número WhatsApp" name="whatsapp">
+			</div>
+		</div>
+		<div class="form-row">Foto de Perfil 
+			<input  type="file" name="imagem_prod">
+<br>	</div>
+      	<div class="form-row">
+			<div class="form-group ">
+				<button type="submit" class="btn btn-primary botao" name="conectar">Cadastrar</button>
+			</div>
+		</div>
+			
+	</form>
+<br>
+<br>
+<br>
+	 <table class="table" >
+    <tr>
+		<th>Foto Perfil</th>
+        <th>Razão Social</th>
+        <th>CNPJ</th>
+    </tr>
+    {{#each ong}}
+    
+         <tr>
+			 <td><img src="/static/imagens/{{foto}}" height="100px" width="100px"></td>
+             <td>{{razaoSocial}}</td>
+             <td>{{cnpj}}</td>
+             <td><a href="/updateOng/{{id}} class="btn btn-warning"">Editar</a></td>
+
+			 <form method="POST" action="/deleteOng" style="display : inline;" onsubmit="confirmarDelecao(event, this)"> 
+                <input type="hidden" name="id" value="{{id}}">
+                <td><button class="btn btn-danger" >Excluir</button></td>
+              </form>
+             
+         </tr>
+    {{/each}}
+    </table>
+	
+
+<script>
+  function confirmarDelecao(event, form){
+    event.preventDefault();
+    var decision = confirm("Tem certeza que deseja excluir?")
+    if(decision){
+      form.submit();
+    }
+  }
+</script>
+
+	<br>
+	<br>
+	<br>	
+  </div>
+  <br>
+<br>
+<br>
+
+
+  
+	
