@@ -1,9 +1,0 @@
-<h1>Atualização de Usuário</h1>
-{{#each doador}}
-    <form action="/updateUsuario" method="POST">
-            <input type="text" name="codigo" readonly="true" value={{id}}>
-            <input type="text" name="nome" value={{nome}}>
-            <input type="text" name="senha" value={{senha}}>
-            <input type="submit" name="conectar">
-        </form>
-{{/each}}

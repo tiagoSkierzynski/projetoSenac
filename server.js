@@ -1,4 +1,4 @@
-const usuario = require("./models/usuario")
+const ongCadastro = require("./models/ongCadastro")
 
 const express = require("express")
 const app = express()
@@ -12,10 +12,22 @@ app.set('view engine','handlebars')
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
-app.use('/static', express .static(__dirname + '/public'));
+app.use('/public', express .static(__dirname + '/public'));
 
 //chamada ao módulo express-session
 var session = require('express-session'); 
+
+/*
+ //configurações do multer
+ const multer = require("multer")
+
+ const storage = multer.diskStorage({
+       destination:(req,file,cb) =>{cb(null,'public/imagens')},
+       filename:(req,file,cb) => {cb(null,file.originalname)}
+ })
+ 
+ const upload = multer({storage})
+*/
 
 //configuração da session
 app.use(session({
@@ -35,7 +47,7 @@ app.use(session({
         req.session.nome = req.body.nome
         req.session.senha = req.body.senha
         
-        usuario.count({where: ({nome: req.session.nome}, {senha: req.session.senha})}).then(function(dados){
+        ongCadastro.count({where: ({nome: req.session.nome}, {senha: req.session.senha})}).then(function(dados){
             if(dados >= 1){
                 res.render('caminhos')
             }else{
@@ -74,6 +86,7 @@ app.use(session({
         }
     });
     */
+    
     //este código configura o multer para fazer upload de imagens
     const multer = require("multer")
 
@@ -84,18 +97,18 @@ app.use(session({
 
     const upload = multer({storage})
 
+    //Aqui destrói a sessão criada após fazer login.
     app.get('/sair', function(req,res){
         req.session.destroy(function(){
             res.render('paginaInicial')
         })
-        //Aqui destrói a sessão criada após fazer login.
     })
 
 app.post('/delete',function(req,res){
-    usuario.destroy({
+    ongCadastro.destroy({
         where:{'id': req.body.id}
     }).then(function(){
-        usuario.findAll().then(function(doadores){
+        ongCadastro.findAll().then(function(doadores){
             res.render('cadastro',{doador: doadores.map(
                 pagamento => pagamento.toJSON())})
         })
@@ -105,51 +118,107 @@ app.post('/delete',function(req,res){
     })
 });
 
-//VAMOS CRIAR MAIS UMA ROTA E ELA DARA PARA UM FORMULÁRIO
-app.get('/update/:id',function(req,res){
-    usuario.findAll({ where:{'id' : req.params.id}}).then(function(doadores){
-        res.render('atualiza',{doador: doadores.map(pagamento => pagamento.toJSON())})
-    })
-})
-
-app.get('/cadastro',function(req,res){
-    usuario.findAll().then(function(doadores){
-        res.render("cadastro",{doador: doadores.map(pagamento => pagamento.toJSON())})
-    })
-})
-
 
 //esse bloco é disparado pelo enviar do formulario
-app.post('/cadUsuario',upload.single('foto'),function(req,res){
-    console.log(req.file.originalname);
-    usuario.create({
-        nomeCompleto:req.body.nomeCompleto,
-        senha:req.body.senha,
-        cpf_cnpj:req.body.cpf_cnpj,
-        telefone:req.body.telefone,
-        tipo:req.body.tipo,
-        email:req.body.email,
+app.post('/cadOng', upload.single('imagem_prod'),function(req,res){
+    console.log(req.file.originalname)
+    ongCadastro.create({
+        razaoSocial:req.body.razaoSocial,
+        cnpj:req.body.cnpj,
         endereco:req.body.endereco,
-        estado:req.body.estado,
+        numero:req.body.numero,
+        bairro:req.body.bairro,
         cidade:req.body.cidade,
-        cep:req.body.cep,
-        foto:req.file.originalname,
-        descricao:req.body.descricao
+        estado:req.body.estado,
+        email:req.body.email,
+        senha:req.body.senha,
+        whatsapp:req.body.whatsapp,
+        telefoneFixo:req.body.telefoneFixo,
+        foto:req.file.originalname
     }).then(function(){
-        usuario.findAll().then(function(doadores){
-            res.render('cadastro',{doador: doadores.map(pagamento => pagamento.toJSON())})
-        })
+        ongCadastro.findAll().then(function(ongs){
+            res.render('cadastroOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
+    })
     }).catch(function(erro){
-        res.send("Erro "+erro)
+        res.send("Erro"+erro)
     })
 })
+
+//este bloco e disparado pela url do navegador e buscar o cadastroOng
+app.get('/cadastroOng',function(req,res){
+    if(req.session.email){
+
+    ongCadastro.findAll().then(function(ongs){
+        res.render('cadastroOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
+    })
+}else{
+    res.render('cadastroOng')
+}
+})
+
+//criando nova rota para formulario de updateOng
+app.get('/updateOng/:id',function(req,res){
+    ongCadastro.findAll({ where:{'id':req.params.id}}).then(function(ongs){
+            res.render('updateOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
+    })
+})
+
+//depois vamos criar essa rota que envia para o banco de dados e chama o  formulario de edição
+
+app.post('/updateOng',function(req,res){
+    ongCadastro.update({
+        razaoSocial:req.body.razaoSocial,
+        cnpj:req.body.cnpj,
+        endereco:req.body.endereco,
+        numero:req.body.numero,
+        bairro:req.body.bairro,
+        cidade:req.body.cidade,
+        estado:req.body.estado,
+        email:req.body.email,
+        senha:req.body.senha,
+        whatsapp:req.body.whatsapp,
+        telefoneFixo:req.body.telefoneFixo,
+},{
+            where:{id:req.body.id}}
+    ).then(function(){
+        ongCadastro.findAll().then(function(ongs){
+            res.render('cadastroOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
+    })
+    }).catch(function(erro){
+        res.send("Erro"+erro)
+    })
+})
+
+//criando o delete ong
+    app.post('/deleteOng',function(req,res){
+        ongCadastro.destroy({
+            where:{'id': req.body.id}
+        }).then(function(){
+            ongCadastro.findAll().then(function(ongs){
+                res.render('cadastroOng',{ong: ongs.map(
+                    cadastramento => cadastramento.toJSON())})
+            })
+    
+          .catch(function(){res.send("não deu certo")
+            })
+        })
+    })
+
+
+/*         login antigo, comparando a estrutura com duas variaveis chumbadas
+app.post('/login',function(req,res){
+    req.session.nome = 'tiago';
+    req.session.senha = 'tiago123';
+
+    if(req.session.nome == req.body.nome  && req.body.senha == 'tiago123'){
+        res.send("usuario logado")
+    }else{
+        res.send("usuario não existe")
+    }
+})*/
 
 app.get('/paginaInicial',function(req,res){
     res.render("paginaInicial")
-})
-
-app.get("/cadastrarAdministrador", function(req,res){
-    res.render("cadastrarAdministrador")
 })
 
 app.get("/quemSomos", function(req,res){
@@ -164,49 +233,27 @@ app.get("/login", function(req,res){
     res.render("login")
 }),
 
-app.get("/caminhoAtualiza", function(req,res){
-    res.render("caminhoAtualiza")
-}),
-
-/*         login antigo, comparando a estrutura com duas variaveis chumbadas
-app.post('/login',function(req,res){
-    req.session.nome = 'tiago';
-    req.session.senha = 'tiago123';
-
-    if(req.session.nome == req.body.nome  && req.body.senha == 'tiago123'){
-        res.send("usuario logado")
-    }else{
-        res.send("usuario não existe")
-    }
-})*/
-
-app.get("/cadastro", function(req,res){
-    res.render("cadastro")
+//rota que está em "cadastro" no menu, que vai definir a qual caminho o usuário deve escolher
+app.get("/caminhos", function(req,res){   
+    res.render("caminhos")
 })
 
-app.get("/pessoa", function(req,res){
-    res.render("pessoa")
+app.get('/cadastroOng',function(req,res){
+    ongCadastro.findAll().then(function(ongs){
+        res.render('cadastroOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
+    })
 })
 
 app.get("/cadastrarProdutos", function(req,res){
     res.render("cadastrarProdutos")
 })
 
-app.get("/finalizarDoacao", function(req,res){
-    res.render("finalizarDoacao")
+app.get("/cadastrarAdministrador", function(req,res){
+    res.render("cadastrarAdministrador")
 })
 
-//DEPOIS VAMOS CRIAR ESSA ROTA QUE ENVIA PARA O BANCO E DEPOIS CHAMA O FORMULARIO
-app.post('/updateUsuario',function(req,res){
-    usuario.update({nome:req.body.nome,senha:req.body.senha },{
-        where:{id:req.body.codigo}}
-    ).then(function(){
-        usuario.findAll().then(function(doadores){
-            res.render('formulario',{doador: doadores.map(pagamento => pagamento.toJSON())})
-    })
-    }).catch(function(erro){
-        res.send("Erro "+erro)
-    })
+app.get("/finalizarDoacao", function(req,res){
+    res.render("finalizarDoacao")
 })
 
 app.listen(3000);
