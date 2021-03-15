@@ -95,3 +95,11 @@
   width: 300px;
 }
 
+/* botões */
+#botaoEditar{
+  background-color: rgb(101, 233, 96);
+}
+
+#botaoExcluir{
+  background-color: rgb(230, 90, 90);
+}

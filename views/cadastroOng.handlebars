@@ -76,11 +76,11 @@
 			 <td><img src="/public/img1/{{foto}}" height="100px" width="100px"></td>
              <td>{{razaoSocial}}</td>
              <td>{{cnpj}}</td>
-             <td><a href="/updateOng/{{id}} class="btn btn-warning"">Editar</a></td>
-<!--
+             <td><a href="/updateOng/{{id}}" id="botaoEditar" class="btn btn-warning"">Editar</a></td>
+			 
 			 <form method="POST" action="/deleteOng" style="display : inline;" onsubmit="confirmarDelecao(event, this)"> 
                 <input type="hidden" name="id" value="{{id}}">
-                <td><button class="btn btn-danger" >Excluir</button></td>
+                <td><button id="botaoExcluir" class="btn btn-danger" >Excluir</button></td>
               </form> -->
              
          </tr>

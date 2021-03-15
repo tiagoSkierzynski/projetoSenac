@@ -1,104 +1,39 @@
-<div class="container-fluid">
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central de Doações </title>
+</head>
+<body>
+       <form action="/cadDoacao" method="POST">
+
+</form>
+  <div class="container">
     <div class="row">
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="static/Imagens/doacoes/acucar.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Açúcar</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/finalizarDoacao" class="btn btn-primary">DOAR</a>
-                </div>
+      <div class="col-md-8">
+        <h2 class="my-4">LISTA DE PEDIDOS SOLICITADOS</h2>
+
+        <div class="card mb-4">
+
+          {{#each doacao}}
+
+          <div class="card-body">
+            <td>{{categoria}}</td><br>
+             <p>{{descricao}}</p>
+             <br>
+             <a href="/perfilOng" class="btn btn-info">Perfil da ONG &rarr;</a>
+            <div class="card-footer text-muted">
+                Prioridade: {{nivel}}
             </div>
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="static/Imagens/doacoes/arroz.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Arroz</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/finalizarDoacao" class="btn btn-primary">DOAR</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="static/Imagens/doacoes/cortarGrama.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Cortar grama</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/finalizarDoacao" class="btn btn-primary">DOAR</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="static/Imagens/doacoes/detergente.jfif" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Detergente</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/finalizarDoacao" class="btn btn-primary">DOAR</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="static/Imagens/doacoes/doacaoDinheiro.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Doação em dinheiro</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/finalizarDoacao" class="btn btn-primary">DOAR</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="static/Imagens/doacoes/farinha.jfif" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Farinha</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/finalizarDoacao" class="btn btn-primary">DOAR</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="static/Imagens/doacoes/feijao.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Feijão</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/finalizarDoacao" class="btn btn-primary">DOAR</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="static/Imagens/doacoes/oleoSoja.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Óleo de soja</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/finalizarDoacao" class="btn btn-primary">DOAR</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="static/Imagens/doacoes/podarArvores.jfif" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Poda de árvores</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/finalizarDoacao" class="btn btn-primary">DOAR</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="static/Imagens/doacoes/sabao.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Sabão</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/finalizarDoacao" class="btn btn-primary">DOAR</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+             <br>
+            
+          </div>
+          
+          <br><br><br><br>
+       {{/each}}
+  
+</body>
+</html>
+ 
+  <br><br><br><br>

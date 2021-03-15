@@ -1,0 +1,91 @@
+<title>Cadastro Doação</title>
+<div class="container" >
+<br><br>
+  <br>
+<h2>Cadastro Doação</h2>
+
+<form action="/cadDoacao" method="POST">
+
+{{#each ong}}
+    <input type="text" name="idOng" readonly="true" value="{{id}}">
+{{/each}}
+
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Categoria de Doação</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="categoria">
+      <option>Alimento</option>
+      <option>Brinquedo</option>
+      <option>Vestuário</option>
+      <option>Dinheiro</option>
+      <option>Serviços comunitários</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Descrição da Doação</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descricao"></textarea>
+  </div>
+  <div class="form-group">
+    <h6>Prioridade</h6>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" value="Baixo"  name="nivel">
+      <label class="form-check-label" for="inlineRadio1">Baixo</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" value="Médio" name="nivel">
+      <label class="form-check-label" for="inlineRadio2">Médio</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" value="Alto" name="nivel" >
+      <label class="form-check-label" for="inlineRadio2">Alto</label>
+    </div>
+    <br>
+  
+  </div>
+
+    <div class="form-row">
+		<div class="form-group ">
+			<button type="submit" class="btn btn-primary botao" name="conectar">Cadastrar</button>
+		</div>
+	</div>
+</form>
+<br>
+<br>
+<br>
+ <table class="table" >
+    <tr>
+        <th>Categoria</th>
+        <th>Descrição</th>
+        <th>Prioridade</th>
+    </tr>
+    {{#each doacao}}
+    
+         <tr>
+             <td>{{categoria}}</td>
+             <td>{{descricao}}</td>
+             <td>{{nivel}}</td>
+             <td><a href="/updateDoacao/{{id}}" id="botaoEditar" class="btn btn-warning">Editar</a></td>
+
+              <form method="POST" action="/deleteDoacao" style="display : inline;" onsubmit="confirmarDelecao(event, this)"> 
+                <input type="hidden" name="id" value="{{id}}">
+                <td><button id="botaoExcluir" class="btn btn-danger" >Excluir</button></td>
+              </form>
+         </tr>
+    {{/each}}
+    </table>
+		<br><br><br><br><br>
+  </div>
+
+
+<script>
+  function confirmarDelecao(event, form){
+    event.preventDefault();
+    var decision = confirm("Tem certeza que deseja excluir?")
+    if(decision){
+      form.submit();
+    }
+  }
+</script>
+
+
+ 
+	

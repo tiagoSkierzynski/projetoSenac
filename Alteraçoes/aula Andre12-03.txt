@@ -34,16 +34,24 @@ app.use(session({
 
     //criando a rota da session para verificar a tabela correta
     app.post('/login', function(req,res){
-        req.session.email = req.body.email
-        req.session.senha = req.body.senha
-        
+    //    req.session.email = req.body.email
+    //    req.session.senha = req.body.senha
+    /*    
         ongCadastro.count({where: ({nome: req.session.nome}, {senha: req.session.senha})}).then(function(dados){
             if(dados >= 1){
                 res.render('cadastroDoacao')
             }else{
                 res.send("Usuário não encontrado" + dados)
             }
-        })
+        }) 
+        */
+       ongCadastro.count({where: ({email: req.body.email})}).then(function(dados){
+          if(dados >= 1){
+              res.render('cadastroDoacao')
+          }else{
+              res.send("Usuário não encontrado" + dados)
+          }
+       })
     })
 
  /*   
