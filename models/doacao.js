@@ -9,7 +9,7 @@ const doacaoCadastro = db.sequelize.define('doacaocadastros',{
 },nivel:{
     type:db.Sequelize.STRING
 },idOng:{
-    type:db.Sequelize.INTEGER
+    type:db.Sequelize.STRING
 },
 })
 

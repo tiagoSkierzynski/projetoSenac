@@ -6,9 +6,7 @@
 
 <form action="/cadDoacao" method="POST">
 
-{{#each ong}}
     <input type="text" name="idOng" readonly="true" value="{{id}}">
-{{/each}}
 
   <div class="form-group">
     <label for="exampleFormControlSelect1">Categoria de Doação</label>
@@ -64,11 +62,6 @@
              <td>{{descricao}}</td>
              <td>{{nivel}}</td>
              <td><a href="/updateDoacao/{{id}}" id="botaoEditar" class="btn btn-warning">Editar</a></td>
-
-              <form method="POST" action="/deleteDoacao" style="display : inline;" onsubmit="confirmarDelecao(event, this)"> 
-                <input type="hidden" name="id" value="{{id}}">
-                <td><button id="botaoExcluir" class="btn btn-danger" >Excluir</button></td>
-              </form>
          </tr>
     {{/each}}
     </table>
