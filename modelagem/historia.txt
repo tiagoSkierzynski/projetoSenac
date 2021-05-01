@@ -1,0 +1,2 @@
+O cliente pediu um sistema web para gerenciar ongs. Esse sistema terá como usuários a ong, o doador
+e o administrador do sistema. A ong web pode se cadastrar no sistema. A ong não pode se cadastrar no sistema

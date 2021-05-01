@@ -1,0 +1,4 @@
+alter table tabela2 add column colunachaveest int,
+add constraint fk_chaveest
+foreign key(colunachaveest)
+references  tabela1(chaveprimaria)

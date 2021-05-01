@@ -1,0 +1,84 @@
+ /*   
+    //código responsável pela validação do email, com o servidor smtp ele vai ser responsável pela validação da conta dos usuários pelo email
+    const nodemailer = require("nodemailer")
+
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+            user: "tiagosala44@gmail.com",
+            pass: "salatiago44"
+        },
+        tls: { rejectUnauthorized: false }
+    });
+
+    const mailOptions = {
+        from: 'tiagosala44@gmail.com',
+        to: 'tiagoskierzynski@gmail.com',
+        subject: 'E-mail enviado usando Node!',
+        text: 'Bem fácil, não? ;)'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email enviado: ' + info.response);
+        }
+    });
+    */
+
+
+
+
+
+/*
+//código que mostra somente os dados da ong que iniciou sua sessão
+app.post('/cadastroOng',function(req,res){
+    ongCadastro.findAll({
+        where:{'id': req.body.id}
+    }).then(function(){
+        ongCadastro.findAll().then(function(ongs){
+            res.render('cadastroOng',{ong: ongs.map(
+                cadastramento => cadastramento.toJSON())})
+        })
+*/
+
+
+
+
+    //essa rota do tipo get /cadastrarAdministrador está parada no momento
+app.get("/cadastrarAdministrador", function(req,res){
+    res.render("cadastrarAdministrador")
+})
+
+
+
+
+
+    //essa rota do tipo get /finalizarDoacao está parada no momento
+app.get("/finalizarDoacao", function(req,res){
+    res.render("finalizarDoacao")
+})
+
+
+
+
+trecho removido dia 21/04 ("SEM TESTAR", COM DÚVIDAS)
+
+//rota para formulario de cadastroDoacao
+    //essa rota do tipo get /cadastroDoacao está sendo executada por um link que está em ???????
+    app.get('/cadastroDoacao',function(req,res){
+        doacaoCadastro.findAll().then(function(doacoes){
+            res.render('cadastroDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
+        })
+    })
+    
+    //rota para formulario de updateDoacao
+        //essa rota do tipo get /updateDoacao está sendo executada por um link que está em cadastroDoacao.handlebars
+    app.get('/updateDoacao/:id',function(req,res){
+        doacaoCadastro.findAll({ where:{'id':req.params.id}}).then(function(doacoes){
+                res.render('updateDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
+        })
+    })
