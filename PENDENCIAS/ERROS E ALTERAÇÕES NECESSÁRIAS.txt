@@ -1,0 +1,5 @@
+1- Não estou conseguindo cadastrar uma doação, acontece o seguinte erro "ErroError: WHERE parameter "idOng" has invalid "undefined" value".
+
+2- é necessário verificar se foi iniciada uma sessão para poder ter acesso a página "cadastro doação", oque ainda não está acontecendo
+
+3- Depois de ter sido feita uma doação é necessário que ela apareça em forma de card na página "doe agora"

@@ -1,2 +1,14 @@
-O cliente pediu um sistema web para gerenciar ongs. Esse sistema terá como usuários a ong, o doador
-e o administrador do sistema. A ong web pode se cadastrar no sistema. A ong não pode se cadastrar no sistema
+O cliente pediu um sistema web para gerenciar ongs. Esse sistema terá como usuarios a ong, o doador e 
+o administrador do sistema. As ong vão poder se cadastrar no sistema web sem a intervenção do administrador, já o doador  
+no momento não irá se cadastrar. Toda vez que ocorrer um cadastro de Ong, automaticamente o sistema criará um login padrão. 
+Esse login padão poderá permitir que a pessoa que se cadastrou possa entrar na área restrita e alterar os seus dados 
+inclusive a sua senha. Quando uma Ong iniciar sua sessão elá poderá cadastrar quantas doações ela quiser, e essas ela 
+poderá atualizar o cadastro ou até mesmo deletá-las, cada doação necessitada aparecerá em uma página especifica para elas, sendo que 
+qualquer um pode visualizá-las, mas para alterar só será possível ser feito pela Ong que a pertence.
+Toda vez que uma pessoa entrar no sistema web, deve aparecer todas as ongs cadastradas. Caso alguma pessoa queira 
+fazer uma doação, ela pode fazer sem necessitar de cadastro.
+Funcionalidades 
+-> Cadastrar usuarios (papel: doador,ong) - requisitos (nenhum), 
+-> Atualizar usuario (papel:doador,ong) - requisitos (nenhum) 
+-> Visualizar ongs (papel:todos) - requisitos (nenhum) 
+-> Efetuar Doação (papel:doador) - requisitos (estar logado)

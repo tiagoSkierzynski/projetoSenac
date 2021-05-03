@@ -336,6 +336,10 @@ app.post('/cadDoacao',function(req,res){
 })
 })
 
+app.get('/cadastroDoacao',function(req,res){
+    res.render("cadastroDoacao")
+})
+
 //depois vamos criar essa rota que envia para o banco de dados e chama o  formulario de edição de doacao
     //a rota /updateDoacao vem do formulário chamado updateDoacao.handlebars
 app.post('/updateDoacao',function(req,res){
