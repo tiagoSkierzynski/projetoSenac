@@ -74,11 +74,3 @@ trecho removido dia 21/04 ("SEM TESTAR", COM DÚVIDAS)
             res.render('cadastroDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
         })
     })
-    
-    //rota para formulario de updateDoacao
-        //essa rota do tipo get /updateDoacao está sendo executada por um link que está em cadastroDoacao.handlebars
-    app.get('/updateDoacao/:id',function(req,res){
-        doacaoCadastro.findAll({ where:{'id':req.params.id}}).then(function(doacoes){
-                res.render('updateDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
-        })
-    })

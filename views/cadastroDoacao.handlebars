@@ -61,6 +61,10 @@
              <td>{{descricao}}</td>
              <td>{{nivel}}</td>
              <td><a href="/updateDoacao/{{id}}" id="botaoEditar" class="btn btn-warning">Editar</a></td>
+             <form method="POST" action="/deleteDoacao" style="display : inline;" onsubmit="confirmarDelecao(event, this)"> 
+                <input type="hidden" name="id" value="{{id}}">
+                <td><button class="btn btn-danger" >Excluir</button></td>
+              </form>
          </tr>
     {{/each}}
     </table>

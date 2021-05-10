@@ -5,6 +5,7 @@ const doacaoCadastro = require("./models/doacao");
 const usuario = require("./models/usuario")
 const pessoa = require("./models/pessoa")
 const fale_conosco = require("./models/fale_conosco")
+const doacao = require("./models/doacao")
 usuario.belongsTo(pessoa,{foreignkey:'Pessoaid',allowNull:true})
 
 const express = require("express")
@@ -84,6 +85,7 @@ app.get('/novo',function(req,res){
                 idUsuario = usuario.map(pagamento => pagamento.toJSON().id)
                 id = idUsuario.toString();
                 req.session.idusuario = id;
+                req.session.email = req.body.email
                 console.log('veio da session isso -> '+req.session.idusuario)
                 res.redirect("/restrita")
                 })
@@ -340,6 +342,22 @@ app.get('/cadastroDoacao',function(req,res){
     res.render("cadastroDoacao")
 })
 
+    //rota para formulario de updateDoacao
+        //essa rota do tipo get /updateDoacao está sendo executada por um link que está em cadastroDoacao.handlebars
+        app.get('/updateDoacao/:id',function(req,res){
+            doacaoCadastro.findAll({ where:{'id':req.params.id}}).then(function(doacoes){
+                    res.render('updateDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
+            })
+        })
+
+//rota para formulario de updateDoacao
+//essa rota do tipo get /updateDoacao está sendo executada por um link que está em cadastroDoacao.handlebars
+app.get('/updateDoacao/:id',function(req,res){
+    doacaoCadastro.findAll({ where:{'id':req.params.id}}).then(function(doacoes){
+        res.render('updateDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
+     })
+})
+
 //depois vamos criar essa rota que envia para o banco de dados e chama o  formulario de edição de doacao
     //a rota /updateDoacao vem do formulário chamado updateDoacao.handlebars
 app.post('/updateDoacao',function(req,res){
@@ -437,7 +455,9 @@ app.get("/quemSomos", function(req,res){
 })
     //essa rota do tipo get /doeAgora está sendo executada por um link que está em main.handlebars
 app.get("/doeAgora", function(req,res){
-    res.render("doeAgora")
+    doacao.findAll().then(function(lista){
+        res.render("doeAgora",{doacao: lista.map(l => l.toJSON())})
+    })
 })
 
 //rota que está em "cadastro" no menu, que vai definir a qual caminho o usuário deve escolher
