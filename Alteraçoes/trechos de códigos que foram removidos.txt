@@ -74,3 +74,28 @@ trecho removido dia 21/04 ("SEM TESTAR", COM DÚVIDAS)
             res.render('cadastroDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
         })
     })
+
+
+
+
+        //nova rota que vai ser acessada através do login    
+    app.post('/login',function(req,res){
+        console.log(req.body)
+        ongCadastro.count({where: { email: req.body.email,senha:req.body.senha }}).then(function(dados){
+            if(dados >=1){
+                usuario.findAll({where: {usuario: req.body.email,senha:req.body.senha }}).then(function(usuario){
+                idUsuario = usuario.map(pagamento => pagamento.toJSON().id)
+                id = idUsuario.toString();
+                req.session.idusuario = id;
+                req.session.email = req.body.email
+                console.log('veio da session isso -> '+req.session.idusuario)
+                res.redirect("/restrita")
+                })
+            }else if( req.session.usuariozito == 1 ){
+                 res.render("login",{mensagem:'Usuário ou senha não existe!!!'})
+                 req.session.usuariozito++
+            }else{
+                res.redirect("/login")
+            }
+        })
+    })

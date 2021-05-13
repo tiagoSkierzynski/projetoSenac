@@ -37,6 +37,9 @@ const ongCadastro = db.sequelize.define('ongcadastros',{
     },
     foto:{
         type:db.Sequelize.STRING
+    },
+    usuario:{
+        type:db.Sequelize.STRING
     }
 })
 

@@ -70,33 +70,12 @@ app.get('/novo',function(req,res){
  /*Esta rota esta fazendo o login do site, ele vai até o banco de dados, conta quantos registros tem no bd, e se 
     for superior a um ele entra na sentença. Ele ve que há um dado igual aquele no banco.*/
     //essa rota do tipo get /login está sendo executada por um link que está em login.handlebars
-    app.get('/login', function (req, res) {
+    app.get('/login', function (req,res) {
         res.render("login")
         req.session.usuariozito = 1
     })
 
 
-    //nova rota que vai ser acessada através do login    
-    app.post('/login',function(req,res){
-        console.log(req.body)
-        usuario.count({where: { usuario: req.body.email,senha:req.body.senha }}).then(function(dados){
-            if(dados >=1){
-                usuario.findAll({where: {usuario: req.body.email,senha:req.body.senha }}).then(function(usuario){
-                idUsuario = usuario.map(pagamento => pagamento.toJSON().id)
-                id = idUsuario.toString();
-                req.session.idusuario = id;
-                req.session.email = req.body.email
-                console.log('veio da session isso -> '+req.session.idusuario)
-                res.redirect("/restrita")
-                })
-            }else if( req.session.usuariozito == 1 ){
-                 res.render("login",{mensagem:'Usuário ou senha não existe!!!'})
-                 req.session.usuariozito++
-            }else{
-                res.redirect("/login")
-            }
-        })
-    })
 
 
     //criando a rota da session para verificar a tabela correta
@@ -112,9 +91,7 @@ app.get('/novo',function(req,res){
           if(dados >= 1){
               req.session.email = req.body.email
               req.session.senha = req.body.senha
-              doacaoCadastro.findAll({where:{'idOng': req.session.email}}).then(function(doacoes){
-                res.render('cadastroDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
-            })
+              res.redirect("/restrita")
             }else{
               res.send("Usuário não encontrado no momento")
           }
@@ -293,25 +270,34 @@ app.post('/updateOng',function(req,res){
 
 //código que pega dados de duas tabelas e adiciona a uma página
     app.get("/restrita",function(req,res){
-        if(req.session.idusuario != undefined){    //está linha verifica se existe uma sessão existe, se não ela da undefined
-            usuario.findAll({
-                raw:true,
-                attibutes:['id'],
-                include:[{
-                    model:pessoa,
-                    required:true,//elimita registro não encontrado na parental
-
-                }],where:{id:req.session.idusuario},
-                order:[['id']]
-            }).then(function(usuario2){
-                res.render('restrita',{usuario2})
-                console.log(usuario2)
+        if(req.session.email != undefined){    //está linha verifica se existe uma sessão existe, se não ela da undefined
+            ongCadastro.findAll().then(function(ongs){
+                res.render('restrita',{ong: ongs.map(
+                    cadastramento => cadastramento.toJSON())})
             })
+
+        }else{
+            res.redirect("/login")
+        }
+    })
+
+
+
+
+
+
+    //código que pega dados de duas tabelas e adiciona a uma página
+    app.get("/listarOng",function(req,res){
+        if(req.session.email != undefined){    //está linha verifica se existe uma sessão existe, se não ela da undefined
+            ongCadastro.findAll().then(function(ongs){
+                res.render('listarOng',{ong: ongs.map(
+                    cadastramento => cadastramento.toJSON())})
+            })
+
         }else{
             res.redirect("/")
         }
     })
-
 
 
 
@@ -338,9 +324,6 @@ app.post('/cadDoacao',function(req,res){
 })
 })
 
-app.get('/cadastroDoacao',function(req,res){
-    res.render("cadastroDoacao")
-})
 
     //rota para formulario de updateDoacao
         //essa rota do tipo get /updateDoacao está sendo executada por um link que está em cadastroDoacao.handlebars
@@ -393,7 +376,18 @@ app.post('/deleteDoacao',function(req,res){
     })
 })
 
+//essa rota do tipo get /cadastroDoacao quando executada leva até o formulário cadastroDoacao, se não estiver logada ela leva até a rota /login
+app.get("/cadastroDoacao",function(req,res){
+    if(req.session.email != undefined){    //está linha verifica se existe uma sessão existe, se não ela da undefined
+        ongCadastro.findAll().then(function(ongs){
+            res.render('cadastroDoacao',{ong: ongs.map(
+                cadastramento => cadastramento.toJSON())})
+        })
 
+    }else{
+        res.redirect("/login")
+    }
+})
 
 
 

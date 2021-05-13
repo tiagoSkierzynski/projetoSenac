@@ -1,5 +1,5 @@
-1- quando a ONG acessar a página "cadastro doação" é necessário que apareça já de cara as doaçoes que ela tem cadastrado coisa que não está acontencendo
+﻿1- quando a ONG acessar a página "cadastro doação" é necessário que apareça já de cara as doaçoes que ela tem cadastrado coisa que não está acontencendo
 
-2- é necessário verificar se foi iniciada uma sessão para poder ter acesso a página "cadastro doação", oque ainda não está acontecendo
+2- é necessário mexer no codigo de cadastro ong, pq quando não e botado uma imagem da ong da erro
 
-3- Depois de ter sido feita uma doação é necessário que ela apareça em forma de card na página "doe agora"
+3- 
