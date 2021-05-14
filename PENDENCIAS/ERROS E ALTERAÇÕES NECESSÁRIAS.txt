@@ -2,4 +2,4 @@
 
 2- é necessário mexer no codigo de cadastro ong, pq quando não e botado uma imagem da ong da erro
 
-3- 
+3- quando acessar a pagina cadastroOng tem que aparecer somente a ong que está iniciada a sessão não todas as ongs que estão cadastradas

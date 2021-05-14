@@ -271,7 +271,7 @@ app.post('/updateOng',function(req,res){
 //código que pega dados de duas tabelas e adiciona a uma página
     app.get("/restrita",function(req,res){
         if(req.session.email != undefined){    //está linha verifica se existe uma sessão existe, se não ela da undefined
-            ongCadastro.findAll().then(function(ongs){
+            ongCadastro.findAll( {where:{email:req.session.email}}).then(function(ongs){
                 res.render('restrita',{ong: ongs.map(
                     cadastramento => cadastramento.toJSON())})
             })
