@@ -1,4 +1,4 @@
- /*   
+﻿ /*   
     //código responsável pela validação do email, com o servidor smtp ele vai ser responsável pela validação da conta dos usuários pelo email
     const nodemailer = require("nodemailer")
 
@@ -99,3 +99,12 @@ trecho removido dia 21/04 ("SEM TESTAR", COM DÚVIDAS)
             }
         })
     })
+
+
+//rota para formulario de updateDoacao
+//essa rota do tipo get /updateDoacao está sendo executada por um link que está em cadastroDoacao.handlebars
+app.get('/updateDoacao/:id',function(req,res){
+    doacaoCadastro.findAll({ where:{'id':req.params.id}}).then(function(doacoes){
+        res.render('updateDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
+     })
+})

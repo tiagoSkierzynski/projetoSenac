@@ -5,48 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil ONG</title><br><br><br>
 </head>
-<body>
-<form action="/perfilOng" method="POST"></form>
-
- 
-<div class="container">
+  <body>
+    <form action="/cadOng" method="POST" >
+<table class="table">
+  <tr>
+    <th>razaoSocial</th>
+  </tr>
   {{#each ong}}
-    <input type="text" name="idOng" readonly="true" value="{{id}}">
-{{/each}}
-    <div class="row">
-      <div class="col-md-8">
-        <h2 class="my-4">Perfil ONG</h2>
-        <div class="card mb-4">
-          {{#each doacao}}
-          <td><img src="/public/imagens/{{foto}}" height="100px" width="100px"></td>
-          <div class="card-body">
-            <p class="card-text">{{razaoSocial}}</p>
-         
-          </div>
-        {{/each}}
-        </div>
-        <br>
-      </div>
-
-
-      </div>
-    </div>
-  </div>
-   <div class="container social-icons">
-        <div >CNPJ: {{cnpj}}</div>
-        <div >Endereço: {{endereco}}</div>
-        <div >Número: {{numero}}</div>
-        <div >Bairro: {{bairro}}</div>
-        <div >Cidade: {{cidade}}</div>
-        <div >Estado: {{estado}}</div>
-        <div >E-mail: {{email}}</div>
-        <div >Telefone Fixo: {{telefoneFixo}}</div>
-        
-        
-    </div>
-
-      <br><br><br><br>
-     
-
-       </body>
-</html>
+<tr>
+    <td>{{razaoSocial}}</td>
+</tr>
+ {{/each}}
+</table>

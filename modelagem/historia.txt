@@ -8,7 +8,9 @@ qualquer um pode visualizá-las, mas para alterar só será possível ser feito 
 Toda vez que uma pessoa entrar no sistema web, deve aparecer todas as ongs cadastradas. Caso alguma pessoa queira 
 fazer uma doação, ela pode fazer sem necessitar de cadastro.
 Funcionalidades 
--> Cadastrar usuarios (papel: doador,ong) - requisitos (nenhum), 
--> Atualizar usuario (papel:doador,ong) - requisitos (nenhum) 
--> Visualizar ongs (papel:todos) - requisitos (nenhum) 
--> Efetuar Doação (papel:doador) - requisitos (estar logado)
+-> Cadastrar ong (papel:ong) - requisitos (nenhum);
+-> Atualizar ong (papel:ong) - requisitos (estar logado);
+-> Efetuar Doação (papel:doador) - requisitos (nenhuma);
+-> Cadastrar uma doação (papel:ong) - requisitos (estar logado);
+-> Atualizar doação (papel:ong) - requisitos (estar logado);
+-> 

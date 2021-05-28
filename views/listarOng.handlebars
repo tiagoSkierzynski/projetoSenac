@@ -1,0 +1,19 @@
+{{#each ong}}
+<h1>ola {{'pessoa.nome'}}</h1>
+<ul>
+    <li><b>Nome da Ong: {{razaoSocial}}</b></li>
+    <li><b>Cidade: {{cidade}}</b></li>
+    <li><b>CNPJ: {{cnpj}}</b></li>
+    <li><b>WhatsApp:</b> {{whatsapp}}</li>
+</ul>
+{{/each}}
+<hr></hr>
+
+<div class="row">
+    <div class="col">
+      <button type="submit" class="btn btn-primary botao"></button><br><br> 
+    </div>
+    <div class="col-9">
+      <a href="/cadastroOng" class="botao">Editar Perfil</a>
+    </div>
+  </div>

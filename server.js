@@ -197,13 +197,14 @@ app.post('/cadOng', upload.single('imagem_prod'),function(req,res){
         foto:req.file.originalname
     }).then(function(){
         ongCadastro.findAll().then(function(ongs){
-            res.render('cadastroOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
+            res.render('login',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
     })
     }).catch(function(erro){
         res.send("Erro"+erro)
     })
 })
 
+/*
 //este bloco e disparado pela url do navegador e buscar o cadastroOng
     //essa rota do tipo get /cadastroOng está sendo executada por um link que está em main.handlebars
 app.get('/cadastroOng',function(req,res){
@@ -216,6 +217,7 @@ app.get('/cadastroOng',function(req,res){
     res.render('cadastroOng')
 }
 })
+*/
 
 //depois vamos criar essa rota que envia para o banco de dados e chama o  formulario de edição
     //a rota /updateOng vem do formulário chamado updateOng.handlebars
@@ -235,7 +237,7 @@ app.post('/updateOng',function(req,res){
 },{
             where:{id:req.body.id}}
     ).then(function(){
-        ongCadastro.findAll().then(function(ongs){
+        ongCadastro.findAll({where:{email:req.session.email}}).then(function(ongs){
             res.render('cadastroOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
     })
     }).catch(function(erro){
@@ -244,12 +246,12 @@ app.post('/updateOng',function(req,res){
 })
 
 //criando o delete ong
-    //a rota /deleteOng vem do formulário chamado cadastroOng.handlebars
+    //a rota /deleteOng vem do formulário chamado cadastroOng.handlebars (ela é executada logo após ser deletada uma doação)
     app.post('/deleteOng',function(req,res){
         ongCadastro.destroy({
             where:{'id': req.body.id}
         }).then(function(){
-            ongCadastro.findAll().then(function(ongs){
+            ongCadastro.findAll({where:{email:req.session.email}}).then(function(ongs){
                 res.render('cadastroOng',{ong: ongs.map(
                     cadastramento => cadastramento.toJSON())})
             })
@@ -306,7 +308,7 @@ app.post('/updateOng',function(req,res){
 
 //COMEÇANDO AS CONFIGURAÇÕES DE CADASTRO DE DOAÇÕES
 //criando tabela de doação
-    //a rota /cadDoacao vem do formulário chamado cadastroDoacao.handlebars
+    //a rota /cadDoacao vem do formulário chamado cadastroDoacao.handlebars (ela é executada depois de ser cadastrado uma doação)
 app.post('/cadDoacao',function(req,res){
    
     doacaoCadastro.create({
@@ -317,7 +319,7 @@ app.post('/cadDoacao',function(req,res){
 
     }).then(function(){
         doacaoCadastro.findAll({where:{'idOng': req.session.email}}).then(function(doacoes){
-            res.render('cadastroDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
+            res.render('cadastroDoacao',{ong: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
         }).catch(function(erro){
         res.send("Erro"+erro)
     })
@@ -333,14 +335,6 @@ app.post('/cadDoacao',function(req,res){
             })
         })
 
-//rota para formulario de updateDoacao
-//essa rota do tipo get /updateDoacao está sendo executada por um link que está em cadastroDoacao.handlebars
-app.get('/updateDoacao/:id',function(req,res){
-    doacaoCadastro.findAll({ where:{'id':req.params.id}}).then(function(doacoes){
-        res.render('updateDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
-     })
-})
-
 //depois vamos criar essa rota que envia para o banco de dados e chama o  formulario de edição de doacao
     //a rota /updateDoacao vem do formulário chamado updateDoacao.handlebars
 app.post('/updateDoacao',function(req,res){
@@ -352,8 +346,8 @@ app.post('/updateDoacao',function(req,res){
         nivel:req.body.nivel},{
             where:{id:req.body.id}}
     ).then(function(){
-        doacaoCadastro.findAll().then(function(doacoes){
-            res.render('cadastroDoacao',{doacao: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
+        doacaoCadastro.findAll({where:{'idOng': req.session.email}}).then(function(doacoes){
+            res.render('cadastroDoacao',{ong: doacoes.map(cadastradoacao => cadastradoacao.toJSON())})
     })
     }).catch(function(erro){
         res.send("Erro"+erro)
@@ -366,8 +360,8 @@ app.post('/deleteDoacao',function(req,res){
     doacaoCadastro.destroy({
         where:{'id': req.body.id}
     }).then(function(){
-        doacaoCadastro.findAll().then(function(doacoes){
-            res.render('cadastroDoacao',{doacao: doacoes.map(
+        doacaoCadastro.findAll({where:{'idOng': req.session.email}}).then(function(doacoes){
+            res.render('cadastroDoacao',{ong: doacoes.map(
                 cadastradoacao => cadastradoacao.toJSON())})
         })
 
@@ -379,7 +373,7 @@ app.post('/deleteDoacao',function(req,res){
 //essa rota do tipo get /cadastroDoacao quando executada leva até o formulário cadastroDoacao, se não estiver logada ela leva até a rota /login
 app.get("/cadastroDoacao",function(req,res){
     if(req.session.email != undefined){    //está linha verifica se existe uma sessão existe, se não ela da undefined
-        ongCadastro.findAll().then(function(ongs){
+        doacaoCadastro.findAll({where:{'idOng': req.session.email}}).then(function(ongs){
             res.render('cadastroDoacao',{ong: ongs.map(
                 cadastramento => cadastramento.toJSON())})
         })
@@ -408,13 +402,13 @@ app.get("/cadastroDoacao",function(req,res){
 //CRIANDO NOVA ROTA PARA ACESSAR O PERFIL DA ONG
     //a rota /perfilOng vem do formulário chamado perfilOng.handlebars
 app.post('/perfilOng',function(req,res){
-    ongCadastro.findAll({ where:{'id':req.params.id}}).then(function(ongs){
-            res.render('perfilOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
-    })
+    
 })
     //essa rota do tipo get /perfilOng está sendo executada por um link que está em doeAgora.handlebars
 app.get('/perfilOng',function(req,res){
-    res.render('perfilOng')
+    ongCadastro.findAll().then(function(ongs){
+        res.render('perfilOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
+})
 })
 
 
@@ -493,7 +487,7 @@ app.post('/fale_conosco',function(req,res){
     //essa rota do tipo get /cadastroOng está sendo executada por um link que está em main.handlebars
 app.get('/cadastroOng',function(req,res){
     if(req.session.email){    
-    ongCadastro.findAll().then(function(ongs){
+    ongCadastro.findAll({where:{email:req.session.email}}).then(function(ongs){
         res.render('cadastroOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
     })
 }else{
@@ -504,7 +498,7 @@ app.get('/cadastroOng',function(req,res){
 //rota para formulario de updateOng
     //essa rota do tipo get /updateOng está sendo executada por um link que está em cadastroOng.handlebars
 app.get('/updateOng/:id',function(req,res){
-    ongCadastro.findAll({ where:{'id':req.params.id}}).then(function(ongs){
+    ongCadastro.findAll().then(function(ongs){
             res.render('updateOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
     })
 })
