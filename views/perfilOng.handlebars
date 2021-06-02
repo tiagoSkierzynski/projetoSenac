@@ -9,11 +9,27 @@
     <form action="/cadOng" method="POST" >
 <table class="table">
   <tr>
-    <th>razaoSocial</th>
+    <th></th>
+    <th>Nome / Razão Social</th>
+    <th>Endereço</th>
+    <th>Bairro</th>
+    <th>Número</th>
+    <th>Cidade</th>
+    <th>Email</th>
+    <th>whatsapp</th>
+    <th>Telefone fixo</th>
   </tr>
   {{#each ong}}
 <tr>
+    <td>{{foto}}</td>
     <td>{{razaoSocial}}</td>
+    <td>{{endereco}}</td>
+    <td>{{bairro}}</td>
+    <td>{{numero}}</td>
+    <td>{{cidade}}</td>
+    <td>{{email}}</td>
+    <td>{{whatsapp}}</td>
+    <td>{{telefoneFixo}}</td>
 </tr>
  {{/each}}
 </table>

@@ -404,9 +404,9 @@ app.get("/cadastroDoacao",function(req,res){
 app.post('/perfilOng',function(req,res){
     
 })
-    //essa rota do tipo get /perfilOng está sendo executada por um link que está em doeAgora.handlebars
-app.get('/perfilOng',function(req,res){
-    ongCadastro.findAll().then(function(ongs){
+//essa rota do tipo get /perfilOng está sendo executada por um link que está em doeAgora.handlebars
+app.get('/perfilOng/:email',function(req,res){
+   ongCadastro.findAll({where:{'email': req.params.email}}).then(function(ongs){
         res.render('perfilOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
 })
 })
