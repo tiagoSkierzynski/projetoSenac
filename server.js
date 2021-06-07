@@ -93,7 +93,7 @@ app.get('/novo',function(req,res){
               req.session.senha = req.body.senha
               res.redirect("/restrita")
             }else{
-              res.send("Usuário não encontrado no momento")
+              res.render('login',{mensagem:'O email ou a senha está incorreto(a)'})
           }
        }).catch(function(erro){
         res.send("deu tudo errado")
@@ -471,7 +471,7 @@ app.post('/fale_conosco',function(req,res){
         email_solicitante:req.body.email_solicitante,
         relato_solicitante:req.body.relato_solicitante
     }).then(function(){
-        res.render('fale_conosco',{mensagem:'Cadastrado com sucesso!!!'})
+        res.render('fale_conosco',{mensagem:'Sua mensagem foi enviada!'})
     })
 })
 

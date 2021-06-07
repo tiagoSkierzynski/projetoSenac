@@ -103,3 +103,7 @@
 #botaoExcluir{
   background-color: rgb(230, 90, 90);
 }
+
+#corMensagem{
+  background-color: green;
+}
