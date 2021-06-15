@@ -1,16 +1,11 @@
-O cliente pediu um sistema web para gerenciar ongs. Esse sistema terá como usuarios a ong, o doador e 
-o administrador do sistema. As ong vão poder se cadastrar no sistema web sem a intervenção do administrador, já o doador  
-no momento não irá se cadastrar. Toda vez que ocorrer um cadastro de Ong, automaticamente o sistema criará um login padrão. 
-Esse login padão poderá permitir que a pessoa que se cadastrou possa entrar na área restrita e alterar os seus dados 
-inclusive a sua senha. Quando uma Ong iniciar sua sessão elá poderá cadastrar quantas doações ela quiser, e essas ela 
-poderá atualizar o cadastro ou até mesmo deletá-las, cada doação necessitada aparecerá em uma página especifica para elas, sendo que 
-qualquer um pode visualizá-las, mas para alterar só será possível ser feito pela Ong que a pertence.
-Toda vez que uma pessoa entrar no sistema web, deve aparecer todas as ongs cadastradas. Caso alguma pessoa queira 
-fazer uma doação, ela pode fazer sem necessitar de cadastro.
-Funcionalidades 
+O cliente pediu um sistema web para que as ONGs possam mandar solicitações de doações. Esse sistema terá como usuários a ONG, o doador e o administrador do sistema. As ONGs podem se cadastrar no sistema web sem a intervenção do administrador, mas no momento caberá a ele conferir se o cadastro procede, já no caso dos doadores não será pedido para eles realizarem seu cadastro.
+Depois de a ONG ter feito o seu cadastro ela será direcionada para realizar o login padrão assim poderá permitir que a ONG possa solicitar uma doação, onde ela vai cadastrar a mesma, sendo assim ela poderá atualizar o cadastro da doação e também o seu.
+Depois de realizada a solicitação de doação ela deverá aparecer em uma página especifica que mostre somente elas, onde o usuário possa acessar sem nenhuma restrição, ao acessar a página e ao clicar em uma delas deverá mostrar o contato e os dados de localização da mesma. O site também deverá ter uma página onde o usuário possa mandar uma mensagem como sugestões, reclamações, pontos a melhorar entre outras.
+Funcionalidades solicitadas:
 -> Cadastrar ong (papel:ong) - requisitos (nenhum);
 -> Atualizar ong (papel:ong) - requisitos (estar logado);
--> Efetuar Doação (papel:doador) - requisitos (nenhuma);
+-> Acessar a página de Doações (papel:doador) - requisitos (nenhum);
 -> Cadastrar uma doação (papel:ong) - requisitos (estar logado);
 -> Atualizar doação (papel:ong) - requisitos (estar logado);
--> 
+-> Mandar mensagem (papel:doador) - requisitos (nenhum);
+-> Visualizar contato da ONG (papel:doador) - requisitos (nenhum);

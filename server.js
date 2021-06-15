@@ -42,7 +42,7 @@ const notificar = require("./controler/notificar")
 
     
     const storage = multer.diskStorage({
-        destination:(req,file,cb) =>{cb(null,'public/img1')},
+        destination:(req,file,cb) =>{cb(null,'public/Imagens/')},
         filename:(req,file,cb) => {cb(null,file.originalname)}
     })
 
@@ -87,7 +87,7 @@ app.get('/novo',function(req,res){
     //    req.session.senha = req.body.senha
     
     
-       ongCadastro.count({where: ({email: req.body.email}, {senha: req.body.senha})}).then(function(dados){
+       ongCadastro.count({where: ({email: req.body.email, senha: req.body.senha})}).then(function(dados){
           if(dados >= 1){
               req.session.email = req.body.email
               req.session.senha = req.body.senha
@@ -181,7 +181,12 @@ app.post('/delete',function(req,res){
 //esse bloco é disparado pelo enviar do formulario
 //a rota /cadOng vem do formulário chamado cadastroOng.handlebars
 app.post('/cadOng', upload.single('imagem_prod'),function(req,res){
-    console.log(req.file.originalname)
+    //console.log(req.file.originalname)
+    if(req.file){
+        var imagem = req.file.originalname
+       }else{
+           var imagem = 'semFoto.jpg'
+       }
     ongCadastro.create({
         razaoSocial:req.body.razaoSocial,
         cnpj:req.body.cnpj,
@@ -194,7 +199,7 @@ app.post('/cadOng', upload.single('imagem_prod'),function(req,res){
         senha:req.body.senha,
         whatsapp:req.body.whatsapp,
         telefoneFixo:req.body.telefoneFixo,
-        foto:req.file.originalname
+        foto:imagem
     }).then(function(){
         ongCadastro.findAll().then(function(ongs){
             res.render('login',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
@@ -221,7 +226,12 @@ app.get('/cadastroOng',function(req,res){
 
 //depois vamos criar essa rota que envia para o banco de dados e chama o  formulario de edição
     //a rota /updateOng vem do formulário chamado updateOng.handlebars
-app.post('/updateOng',function(req,res){
+app.post('/updateOng', upload.single('imagem_prod'),function(req,res){
+    if(req.file){
+        var imagem = req.file.originalname
+    }else{
+        var imagem = 'semFoto.jpg'
+    }
     ongCadastro.update({
         razaoSocial:req.body.razaoSocial,
         cnpj:req.body.cnpj,
@@ -234,6 +244,7 @@ app.post('/updateOng',function(req,res){
         senha:req.body.senha,
         whatsapp:req.body.whatsapp,
         telefoneFixo:req.body.telefoneFixo,
+        foto:imagem
 },{
             where:{id:req.body.id}}
     ).then(function(){
@@ -498,7 +509,7 @@ app.get('/cadastroOng',function(req,res){
 //rota para formulario de updateOng
     //essa rota do tipo get /updateOng está sendo executada por um link que está em cadastroOng.handlebars
 app.get('/updateOng/:id',function(req,res){
-    ongCadastro.findAll().then(function(ongs){
+    ongCadastro.findAll({where:{id:req.params.id}}).then(function(ongs){
             res.render('updateOng',{ong: ongs.map(cadastramento => cadastramento.toJSON())})
     })
 })
